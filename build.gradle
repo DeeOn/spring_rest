@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+    id "org.springframework.boot" version "2.1.8.RELEASE"
+    id "io.spring.dependency-management" version "1.0.8.RELEASE"
+    id "io.freefair.lombok" version "4.1.0"
+}
+
+group 'rest'
+version '0.1'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.8.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.1.8.RELEASE'
+    runtimeOnly group: 'com.h2database', name: 'h2', version: '1.4.199'
+}
