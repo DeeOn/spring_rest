@@ -15,17 +15,19 @@ public class GreetingHandler {
 
     @Async
     public CompletableFuture<Greeting> requestGreeting(long id) {
+
+        try {
+            Thread.sleep(10000L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return CompletableFuture.completedFuture(new Greeting(id, messageRepo.findById(id).orElse(new Message()).getText()));
     }
 
     @Async
     public CompletableFuture<Answer> requestAnswer(String message) {
-        try {
-            Thread.sleep(5000L);
-            return CompletableFuture.completedFuture(new Answer(messageRepo.save(new Message(message)).getId(), message, messageRepo.count()));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            return null;
-        }
+
+        return CompletableFuture.completedFuture(new Answer(messageRepo.save(new Message(message)).getId(), message, messageRepo.count()));
+
     }
 }
