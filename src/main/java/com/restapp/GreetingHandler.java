@@ -2,8 +2,10 @@ package com.restapp;
 
 import com.restapp.repos.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class GreetingHandler {
@@ -11,13 +13,19 @@ public class GreetingHandler {
     @Autowired
     private MessageRepo messageRepo;
 
-    public Greeting getGreeting(long id) {
-
-        return new Greeting(id, messageRepo.findById(id).orElse(new Message()).getText());
-
+    @Async
+    public CompletableFuture<Greeting> requestGreeting(long id) {
+        return CompletableFuture.completedFuture(new Greeting(id, messageRepo.findById(id).orElse(new Message()).getText()));
     }
 
-    public Answer getAnswer(String message) {
-        return new Answer(messageRepo.save(new Message(message)).getId(), message, messageRepo.count());
+    @Async
+    public CompletableFuture<Answer> requestAnswer(String message) {
+        try {
+            Thread.sleep(5000L);
+            return CompletableFuture.completedFuture(new Answer(messageRepo.save(new Message(message)).getId(), message, messageRepo.count()));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
