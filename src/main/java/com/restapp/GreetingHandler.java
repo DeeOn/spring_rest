@@ -1,18 +1,23 @@
 package com.restapp;
 
+import com.restapp.repos.MessageRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class GreetingHandler {
 
-    public Greeting getGreeting(long id, String message) {
+    @Autowired
+    private MessageRepo messageRepo;
 
-        return new Greeting(id, message);
+    public Greeting getGreeting(long id) {
+
+        return new Greeting(id, messageRepo.findById(id).orElse(new Message()).getText());
 
     }
 
-    public Answer getAnswer(long id, String message, long count) {
-
-        return new Answer(id, message, count);
+    public Answer getAnswer(String message) {
+        return new Answer(messageRepo.save(new Message(message)).getId(), message, messageRepo.count());
     }
 }

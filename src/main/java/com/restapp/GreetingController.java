@@ -15,9 +15,6 @@ public class GreetingController {
     @Autowired
     private GreetingHandler greetingHandler;
 
-    @Autowired
-    private MessageRepo messageRepo;
-
     public GreetingController(GreetingHandler greetingHandler) {
         this.greetingHandler = greetingHandler;
     }
@@ -25,13 +22,12 @@ public class GreetingController {
     @RequestMapping(value="/greeting", method=GET)
     public Greeting greeting(@RequestParam(value="id") Long id) {
 
-        return greetingHandler.getGreeting(id, messageRepo.findById(id).orElse(new Message()).getText());
+        return greetingHandler.getGreeting(id);
 
     }
 
     @RequestMapping(value="/greeting", method=POST)
-    public Answer saveMessage(@RequestParam(value="message") String text) {
-        Message message = new Message(text);
-        return greetingHandler.getAnswer(messageRepo.save(message).getId(), text, messageRepo.count());
+    public Answer saveMessage(@RequestParam(value="message") String message) {
+        return greetingHandler.getAnswer(message);
     }
 }
