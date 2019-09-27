@@ -20,4 +20,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.1.8.RELEASE'
     runtimeOnly group: 'com.h2database', name: 'h2', version: '1.4.199'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: '2.1.8.RELEASE'
+
+}
+
+configurations {
+    compile.exclude module: 'spring-boot-starter-logging'
 }

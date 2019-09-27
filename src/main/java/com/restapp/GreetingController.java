@@ -1,5 +1,7 @@
 package com.restapp;
 
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +16,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
+@Slf4j
 public class GreetingController {
 
     @Autowired
@@ -27,7 +30,9 @@ public class GreetingController {
     public Greeting greeting(@RequestParam(value="id") Long id, HttpServletResponse response) {
 
         try {
+            log.info("GET by id=" + id);
             return greetingHandler.requestGreeting(id).get(5L, TimeUnit.SECONDS);
+
         } catch (InterruptedException e) {
             e.printStackTrace();
             return null;
@@ -35,7 +40,7 @@ public class GreetingController {
             e.printStackTrace();
             return null;
         } catch (TimeoutException e) {
-            e.printStackTrace();
+            log.error("TimeoutException");
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return new Greeting(-1, "TIMEOUT");
         }
@@ -46,6 +51,7 @@ public class GreetingController {
     public Answer saveMessage(@RequestParam(value="message") String message) {
 
         try {
+            log.info("POST with message=" + message);
             return greetingHandler.requestAnswer(message).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
