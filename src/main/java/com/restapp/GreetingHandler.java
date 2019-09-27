@@ -1,5 +1,6 @@
 package com.restapp;
 
+import com.restapp.AOP.LogRequestMethods;
 import com.restapp.repos.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -14,6 +15,7 @@ public class GreetingHandler {
     private MessageRepo messageRepo;
 
     @Async
+    @LogRequestMethods
     public CompletableFuture<Greeting> requestGreeting(long id) {
 
         try {
@@ -25,6 +27,7 @@ public class GreetingHandler {
     }
 
     @Async
+    @LogRequestMethods
     public CompletableFuture<Answer> requestAnswer(String message) {
 
         return CompletableFuture.completedFuture(new Answer(messageRepo.save(new Message(message)).getId(), message, messageRepo.count()));
