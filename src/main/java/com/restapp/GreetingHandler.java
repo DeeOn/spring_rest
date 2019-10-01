@@ -18,11 +18,11 @@ public class GreetingHandler {
     @LogRequestMethods
     public CompletableFuture<Greeting> requestGreeting(long id) {
 
-        try {
-            Thread.sleep(10000L);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(10000L);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         return CompletableFuture.completedFuture(new Greeting(id, messageRepo.findById(id).orElse(new Message()).getText()));
     }
 

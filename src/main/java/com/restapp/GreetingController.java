@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -16,7 +17,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
-@Slf4j
+@Log4j2
 public class GreetingController {
 
     @Autowired
@@ -27,10 +28,11 @@ public class GreetingController {
     }
 
     @RequestMapping(value="/greeting", method=GET)
-    public Greeting greeting(@RequestParam(value="id") Long id, HttpServletResponse response) {
+    public Greeting greeting(@RequestParam(value="id") Long id, HttpServletRequest request, HttpServletResponse response) {
 
         try {
             log.info("GET by id=" + id);
+            log.info(request.getQueryString());
             return greetingHandler.requestGreeting(id).get(5L, TimeUnit.SECONDS);
 
         } catch (InterruptedException e) {

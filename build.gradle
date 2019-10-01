@@ -3,6 +3,7 @@ plugins {
     id "org.springframework.boot" version "2.1.8.RELEASE"
     id "io.spring.dependency-management" version "1.0.8.RELEASE"
     id "io.freefair.lombok" version "4.1.0"
+    id "org.flywaydb.flyway" version "6.0.4"
 }
 
 group 'rest'
@@ -19,9 +20,10 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.8.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.1.8.RELEASE'
-    runtimeOnly group: 'com.h2database', name: 'h2', version: '1.4.199'
+    runtimeOnly group: 'com.h2database', name: 'h2', version: '1.4.197'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: '2.1.8.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: '2.1.8.RELEASE'
+    compile group: 'org.flywaydb', name: 'flyway-core'
 }
 
 configurations {
