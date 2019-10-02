@@ -12,6 +12,6 @@ public class Aspect {
 
     @Before("@annotation(LogRequestMethods)")
     public void logRequestMethods(JoinPoint joinPoint) throws Throwable {
-        log.info("Executing method:" + joinPoint.toShortString());
+        log.info("Executing method: " + joinPoint.toShortString());
     }
 }
